@@ -1,0 +1,21 @@
+{% extends "blogapp/base.html" %}
+{% load markdown_extras %}
+
+{% block title %}#{{ tag.name }} | DevBlog{% endblock %}
+
+{% block content %}
+  <h1>#{{ tag.name }}</h1>
+
+  {% for post in posts %}
+    <article class="post-card">
+      <h2><a href="{% url 'blogapp:post_detail' post.slug %}">{{ post.title }}</a></h2>
+      <p class="meta">
+        <a href="#">{{ post.author.username }}</a> ·
+        <time datetime="{{ post.created_at|date:'Y-m-d' }}">{{ post.created_at|date:'d M Y' }}</time>
+      </p>
+      <p>{{ post.body|markdown|striptags|truncatewords:25 }}</p>
+    </article>
+  {% empty %}
+    <p>Bu teg bilan postlar yo'q.</p>
+  {% endfor %}
+{% endblock %}

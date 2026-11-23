@@ -1,0 +1,50 @@
+{% extends "blogapp/base.html" %}
+{% load static %}
+
+{% block title %}{% if post %}Postni tahrirlash{% else %}Post yozish{% endif %} | DevBlog{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'blogapp/write.css' %}">
+{% endblock %}
+
+{% block content %}
+  <h1>{% if post %}Postni tahrirlash{% else %}Yangi post yozish{% endif %}</h1>
+
+  <form class="write-form" method="post">
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label for="{{ form.title.id_for_label }}">Sarlavha</label>
+      {{ form.title }}
+      {% for error in form.title.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.tags.id_for_label }}">Teglar</label>
+      {{ form.tags }}
+      <small>Teglarni vergul bilan ajrating</small>
+      {% for error in form.tags.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.body.id_for_label }}">Matn</label>
+      {{ form.body }}
+      <small>Markdown ishlatish mumkin: ## sarlavha, **qalin**, - ro'yxat</small>
+      {% for error in form.body.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+    </div>
+
+    <div class="form-check">
+      {{ form.is_published }}
+      <label for="{{ form.is_published.id_for_label }}">Hozir e'lon qilish</label>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-publish">{% if post %}Saqlash{% else %}Yuborish{% endif %}</button>
+      {% if post %}
+        <a href="{% url 'blogapp:post_detail' post.slug %}" class="btn-cancel">Bekor qilish</a>
+      {% else %}
+        <a href="{% url 'blogapp:post_list' %}" class="btn-cancel">Bekor qilish</a>
+      {% endif %}
+    </div>
+  </form>
+{% endblock %}

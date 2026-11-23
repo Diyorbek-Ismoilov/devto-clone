@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}DevBlog{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'blogapp/home.css' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="{% url 'blogapp:post_list' %}">DevBlog</a>
+    <nav>
+      <ul>
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'blogapp:post_create' %}">Post yozish</a></li>
+          <li>
+            <form class="logout-form" action="{% url 'blogapp:logout' %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="logout-btn">Chiqish ({{ user.username }})</button>
+            </form>
+          </li>
+        {% else %}
+          <li><a href="{% url 'blogapp:login' %}">Kirish</a></li>
+          <li><a href="{% url 'blogapp:register' %}">Ro'yxatdan o'tish</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

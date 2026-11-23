@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kirish | DevBlog</title>
+  <link rel="stylesheet" href="{% static 'blogapp/style.css' %}">
+</head>
+<body>
+  <div class="auth-page">
+    <div class="auth-card">
+      <a class="logo" href="{% url 'blogapp:post_list' %}">DevBlog</a>
+      <h1>Hisobingizga kiring</h1>
+
+      <form action="{% url 'blogapp:login' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+
+        {% for error in form.non_field_errors %}
+          <p class="field-error">{{ error }}</p>
+        {% endfor %}
+
+        {% for field in form %}
+          <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% for error in field.errors %}
+              <p class="field-error">{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endfor %}
+
+        <button type="submit" class="btn">Kirish</button>
+      </form>
+
+      <p class="switch">Hisobingiz yo'qmi? <a href="{% url 'blogapp:register' %}">Ro'yxatdan o'ting</a></p>
+    </div>
+  </div>
+</body>
+</html>

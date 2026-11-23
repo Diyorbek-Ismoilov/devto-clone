@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ro'yxatdan o'tish | DevBlog</title>
+    <link rel="stylesheet" href={% static 'blogapp/style.css' %}>
+</head>
+<body>
+    <div class="auth-page">
+        <div class="auth-card">
+            <a classs="logo" href="{% url 'blogapp:register' %}">DevBlog</a>
+            <h1>Yangi hisob yaratish</h1>
+
+            <form action="{% url 'blogapp:register' %}" method="post">
+                {% csrf_token %}
+
+            {% for field in form %}
+                <div class="form-group">
+                    <label for"={{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% for error in field.errors %}
+                        <p class="field-error">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn">Ro'yxatdan o'tish</button>
+            </form>
+
+            <p class="switch">Hisobingiz bormi? <a href="{% url 'blogapp:login' %}">Kirish</a></p>
+        </div>
+    </div>    
+</body>
+</html>

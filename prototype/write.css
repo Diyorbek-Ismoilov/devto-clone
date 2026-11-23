@@ -1,0 +1,91 @@
+.write-form {
+    background: #fff;
+    border: 1px solid #d6d6d6;
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+}
+
+.write-form .form-group {
+    margin-bottom: 18px;
+}
+
+.write-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.write-form input[type="text"],
+.write-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    font-family: inherit;
+    font-size: 1rem;
+    border: 1px solid #d6d6d6;
+    border-radius: 8px;
+}
+
+.write-form textarea {
+    line-height: 1.6;
+    resize: vertical;
+
+}
+
+.write-form input[type="text"]:focus,
+.write-form textarea:focus {
+    outline: none;
+    border-color: #3b49df;
+    box-shadow: 0 0 0 3px rgba(59, 73, 223, 0.2);
+}
+
+.write-form small {
+    display: block;
+    margin-top: 6px;
+    color: #666;
+    font-size: 13px;
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.form-check label {
+    margin: 0;
+    font-weight: 400;
+}
+
+.form-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.btn-publish {
+    padding: 10px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background: #3d49df;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-publish:hover {
+    background: #2f3ab2;
+}
+
+.btn-cancel {
+    color: #666;
+    text-decoration: none;
+}
+
+.btn-cancel:hover {
+    color: #222;
+    text-decoration: underline;
+}

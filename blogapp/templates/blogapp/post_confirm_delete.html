@@ -1,0 +1,22 @@
+{% extends "blogapp/base.html" %}
+{% load static %}
+
+{% block title %}Postni o'chirish | DevBlog{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'blogapp/write.css' %}">
+{% endblock %}
+
+{% block content %}
+  <h1>Postni o'chirish</h1>
+
+  <form class="write-form" method="post">
+    {% csrf_token %}
+    <p>"{{ post.title }}" postini o'chirmoqchimisiz? Bu postning izohlari ham o'chadi, qaytarib bo'lmaydi.</p>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-delete">Ha, o'chirish</button>
+      <a href="{% url 'blogapp:post_detail' post.slug %}" class="btn-cancel">Bekor qilish</a>
+    </div>
+  </form>
+{% endblock %}

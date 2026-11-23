@@ -1,0 +1,55 @@
+{% extends "blogapp/base.html" %}
+{% load static %}
+
+{% block title %}{{ post.title }} | DevBlog{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'blogapp/post.css' %}">
+{% endblock %}
+
+{% block content %}
+  <article class="post-full">
+    <h1 class="post-title">{{ post.title }}</h1>
+    <p class="meta">
+      <a href="#">{{ post.author.username }}</a> ·
+      <time datetime="{{ post.created_at|date:'Y-m-d' }}">{{ post.created_at|date:'d M Y' }}</time>
+    </p>
+    <p class="tags">
+      {% for tag in post.tags.all %}
+        <a href="{% url 'blogapp:tag_posts' tag.slug %}">#{{ tag.name }}</a>
+      {% endfor %}
+    </p>
+
+    <div class="post-body">
+      {{ post.body|linebreaks }}
+    </div>
+  </article>
+
+  <section class="comments">
+    <h2>Izohlar ({{ comments|length }})</h2>
+
+    {% if user.is_authenticated %}
+      <form class="comment-form" action="{% url 'blogapp:post_detail' post.slug %}" method="post">
+        {% csrf_token %}
+        <label for="{{ form.body.id_for_label }}">Izoh qoldiring</label>
+        {{ form.body }}
+        {% for error in form.body.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        <button type="submit" class="comment-btn">Yuborish</button>
+      </form>
+    {% else %}
+      <p class="comment-login">Izoh qoldirish uchun <a href="{% url 'blogapp:login' %}?next={{ request.path }}">kiring</a>.</p>
+    {% endif %}
+
+    {% for comment in comments %}
+      <div class="comment">
+        <p class="meta">
+          <a href="#">{{ comment.author.username }}</a> ·
+          <time datetime="{{ comment.created_at|date:'Y-m-d' }}">{{ comment.created_at|date:'d M Y' }}</time>
+        </p>
+        <p>{{ comment.body }}</p>
+      </div>
+    {% empty %}
+      <p>Hozircha izoh yo'q.</p>
+    {% endfor %}
+  </section>
+{% endblock %}
