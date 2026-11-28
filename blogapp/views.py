@@ -6,12 +6,16 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import CommentForm, PostForm, RegisterForm
 from .models import Post, Tag
+from django.utils.text import slugify
 
 
 def save_tags(post, names):
     post.tags.clear()
     for name in names:
-        tag = Tag.objects.filter(name__iexact=name).first()
+        slug = slugify(name)
+        if not slug:
+            continue
+        tag = Tag.objects.filter(slug=slug).first()
         if tag is None:
             tag = Tag.objects.create(name=name)
         post.tags.add(tag)
